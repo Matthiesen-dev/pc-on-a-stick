@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " #",
+    "| "
+  ],
+  "key": {
+    "|": { "item": "minecraft:stick" },
+    "#": { "item": "cobblemon:pc" }
+  },
+  "result": {
+    "id": "pc_on_a_stick:pc_on_a_stick",
+    "count": 1
+  }
+}

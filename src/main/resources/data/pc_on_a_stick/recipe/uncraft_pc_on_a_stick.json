@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item":  "pc_on_a_stick:pc_on_a_stick" }
+  ],
+  "result": {
+    "id": "cobblemon:pc",
+    "count": 1
+  }
+}
