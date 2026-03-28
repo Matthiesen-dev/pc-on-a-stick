@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "pc_on_a_stick:item/pc_on_a_stick"
+  }
+}

@@ -1,0 +1,42 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+#issueTrackerURL = "A valid URL to your issue tracker where people can open bug tickets"
+license = "MIT License"
+
+[[mods]]
+modId = "pc_on_a_stick"
+version = "${version}"
+displayName = "Cobblemon: PC on a Stick"
+authors = "AdamMatthiesen"
+description = '''
+Ever heard of the Crafting Table on a Stick? Well, now there is a PC on a Stick too!
+'''
+#logoFile = ""
+
+[[dependencies.pc_on_a_stick]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.21.1]"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.pc_on_a_stick]]
+modId = "neoforge"
+mandatory = true
+versionRange = "[21.1.182,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.pc_on_a_stick]]
+modId = "cobblemon"
+mandatory = true
+versionRange = "[1.7.3,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.pc_on_a_stick]]
+modId = 'crafting_on_a_stick'
+mandatory = true
+versionRange = "[1.21.0.4,)"
+ordering = "NONE"
+side = "BOTH"
