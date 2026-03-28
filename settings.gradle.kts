@@ -1,4 +1,4 @@
-rootProject.name = "pconastick"
+rootProject.name = "CobblemonPcOnAStick"
 
 pluginManagement {
     repositories {
