@@ -7,9 +7,8 @@ plugins {
     id("architectury-plugin") version ("3.4-SNAPSHOT")
 }
 
-
 group = "xyz.station48"
-version = "1.0.0"
+version = "1.1.0"
 
 architectury {
     platformSetupLoomIde()
@@ -27,22 +26,34 @@ repositories {
     maven("https://thedarkcolour.github.io/KotlinForForge/")
     maven("https://artefacts.cobblemon.com/releases/")
     maven("https://api.modrinth.com/maven")
+    maven("https://maven.theillusivec4.top/")
 }
 
-dependencies {
-    minecraft("net.minecraft:minecraft:1.21.1")
-    mappings(loom.officialMojangMappings())
-    neoForge("net.neoforged:neoforge:21.1.182")
+val minecraftVersion = providers.gradleProperty("minecraft_version").get()
+val neoForgeVersion = providers.gradleProperty("neoforge_version").get()
+val cobblemonVersion = providers.gradleProperty("cobblemon_version").get()
+val kotlinForForgeVersion = providers.gradleProperty("kotlinforforge_version").get()
+val craftingStickVersion = providers.gradleProperty("crafting_stick_version").get()
+val curiosVersion = providers.gradleProperty("curios_version").get()
 
-    modCompileOnly("com.cobblemon:mod:1.7.3+1.21.1")
-    modImplementation("com.cobblemon:neoforge:1.7.3+1.21.1")
+dependencies {
+    minecraft("net.minecraft:minecraft:${minecraftVersion}")
+    mappings(loom.officialMojangMappings())
+    neoForge("net.neoforged:neoforge:${neoForgeVersion}")
+
+    modCompileOnly("com.cobblemon:mod:${cobblemonVersion}")
+    modImplementation("com.cobblemon:neoforge:${cobblemonVersion}")
     //Needed for cobblemon
-    implementation("thedarkcolour:kotlinforforge-neoforge:5.10.0") {
+    implementation("thedarkcolour:kotlinforforge-neoforge:${kotlinForForgeVersion}") {
         exclude("net.neoforged.fancymodloader", "loader")
     }
 
     //Crafting on a Stick mod
-    modImplementation("maven.modrinth:crafting-on-a-stick:1.21.0.4")
+    modImplementation("maven.modrinth:crafting-on-a-stick:${craftingStickVersion}")
+
+    //Curios
+    compileOnly("top.theillusivec4.curios:curios-neoforge:${curiosVersion}:api")
+    runtimeOnly("top.theillusivec4.curios:curios-neoforge:${curiosVersion}")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")

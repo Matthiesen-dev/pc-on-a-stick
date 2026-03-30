@@ -8,6 +8,7 @@ import com.cobblemon.mod.common.battles.BattleRegistry;
 import com.cobblemon.mod.common.net.messages.client.storage.pc.OpenPCPacket;
 import com.ofekn.crafting_on_a_stick.api.IWheelItem;
 import com.ofekn.crafting_on_a_stick.api.Ref;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -15,7 +16,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import javax.annotation.ParametersAreNonnullByDefault;
 
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class PcOnAStickItem extends Item implements IWheelItem {
     public PcOnAStickItem(Properties properties) {
         super(properties);
@@ -33,13 +37,10 @@ public class PcOnAStickItem extends Item implements IWheelItem {
     public static void openPC(Player player) {
         player.playSound(CobblemonSounds.PC_ON, 0.5F, 1.0F);
         if (player instanceof ServerPlayer serverPlayer) {
-             BattleRegistry br = BattleRegistry.INSTANCE;
-             if (BattleRegistry.getBattleByParticipatingPlayerId(serverPlayer.getUUID()) == null) {
+             if (BattleRegistry.getBattleByParticipatingPlayer(serverPlayer) == null) {
                  PCStore pc = Cobblemon.INSTANCE.getStorage().getPC(serverPlayer);
                  PCLinkManager.INSTANCE.addLink(player.getUUID(), pc, (p) -> true);
                  (new OpenPCPacket(pc, 0)).sendToPlayer(serverPlayer);
-             } else {
-                 player.playSound(CobblemonSounds.PC_OFF, 0.5F, 1.0F);
              }
         }
     }

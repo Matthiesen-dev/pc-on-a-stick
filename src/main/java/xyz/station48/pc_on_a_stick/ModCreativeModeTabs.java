@@ -1,4 +1,4 @@
-package xyz.station48.pc_on_a_stick.items;
+package xyz.station48.pc_on_a_stick;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -6,7 +6,6 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import xyz.station48.pc_on_a_stick.PcOnAStick;
 
 import java.util.function.Supplier;
 
