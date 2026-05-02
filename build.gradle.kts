@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "dev.matthiesen"
-version = "1.2.0-SNAPSHOT"
+version = "1.2.0"
 
 architectury {
     platformSetupLoomIde()
