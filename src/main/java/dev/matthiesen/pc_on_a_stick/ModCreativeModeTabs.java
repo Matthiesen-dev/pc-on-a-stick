@@ -1,4 +1,4 @@
-package xyz.station48.pc_on_a_stick;
+package dev.matthiesen.pc_on_a_stick;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -12,14 +12,13 @@ import java.util.function.Supplier;
 public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, PcOnAStick.MOD_ID);
 
+    @SuppressWarnings("unused")
     public static final Supplier<CreativeModeTab> PC_ON_A_STICK_TAB = CREATIVE_MODE_TAB.register("pc_on_a_stick_items_tab",
             () -> CreativeModeTab
                     .builder()
                     .icon(() -> new ItemStack(ModItems.PC_ON_A_STICK.get()))
                     .title(Component.translatable("creativetab.pc_on_a_stick.items"))
-                    .displayItems((itemDisplayParameters, output) -> {
-                        output.accept(ModItems.PC_ON_A_STICK);
-                    })
+                    .displayItems((itemDisplayParameters, output) -> output.accept(ModItems.PC_ON_A_STICK))
                     .build()
     );
 
