@@ -1,10 +1,10 @@
-package xyz.station48.pc_on_a_stick;
+package dev.matthiesen.pc_on_a_stick;
 
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import xyz.station48.pc_on_a_stick.items.PcOnAStickItem;
+import dev.matthiesen.pc_on_a_stick.items.PcOnAStickItem;
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(PcOnAStick.MOD_ID);

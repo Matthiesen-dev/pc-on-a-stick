@@ -1,4 +1,4 @@
-package xyz.station48.pc_on_a_stick;
+package dev.matthiesen.pc_on_a_stick;
 
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.bus.api.IEventBus;

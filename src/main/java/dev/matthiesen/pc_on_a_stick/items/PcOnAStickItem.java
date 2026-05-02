@@ -1,4 +1,4 @@
-package xyz.station48.pc_on_a_stick.items;
+package dev.matthiesen.pc_on_a_stick.items;
 
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.CobblemonSounds;

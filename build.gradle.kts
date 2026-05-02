@@ -7,8 +7,8 @@ plugins {
     id("architectury-plugin") version ("3.4-SNAPSHOT")
 }
 
-group = "xyz.station48"
-version = "1.1.1"
+group = "dev.matthiesen"
+version = "1.2.0"
 
 architectury {
     platformSetupLoomIde()
