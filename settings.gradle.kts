@@ -7,4 +7,6 @@ pluginManagement {
         maven("https://maven.neoforged.net/releases/")
         gradlePluginPortal()
     }
+
+    includeBuild("gradle/build-logic")
 }
