@@ -1,4 +1,4 @@
-rootProject.name = "CobblemonPcOnAStick"
+rootProject.name = "cobblemon-pc-on-a-stick"
 
 pluginManagement {
     repositories {
@@ -7,4 +7,6 @@ pluginManagement {
         maven("https://maven.neoforged.net/releases/")
         gradlePluginPortal()
     }
+
+    includeBuild("gradle/build-logic")
 }

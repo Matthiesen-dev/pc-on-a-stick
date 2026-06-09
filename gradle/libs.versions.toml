@@ -1,0 +1,44 @@
+[versions]
+kotlin = "2.2.20"
+shadow = "9.3.1"
+architectury-loom = "1.13-SNAPSHOT"
+architectury-plugin = "3.4-SNAPSHOT"
+minecraft = "1.21.1"
+neoforge = "21.1.182"
+kotlin-for-forge = "5.10.0"
+cobblemon = "1.7.3+1.21.1"
+junit = "5.1.0"
+publish = "0.35.0"
+matthiesen_lib = "1.5.7"
+crafting-on-a-stick = "1.21.0.4"
+curios = "9.5.1+1.21.1"
+
+[plugins]
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+architectury-loom = { id = "dev.architectury.loom", version.ref = "architectury-loom" }
+architectury-plugin = { id = "architectury-plugin", version.ref = "architectury-plugin" }
+
+[libraries]
+publish = { group = "com.vanniktech", name = "gradle-maven-publish-plugin", version.ref = "publish" }
+kotlin-gradle = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+architectury-loom = { group = "dev.architectury", name = "architectury-loom", version.ref = "architectury-loom" }
+architectury-plugin = { group = "architectury-plugin", name = "architectury-plugin.gradle.plugin", version.ref = "architectury-plugin" }
+shadow-gradle = { group = "com.gradleup.shadow", name = "shadow-gradle-plugin", version.ref = "shadow" }
+minecraft-net = { group = "net.minecraft", name = "minecraft", version.ref = "minecraft" }
+neoforge = { group = "net.neoforged", name = "neoforge", version.ref = "neoforge" }
+kotlinforforge = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref = "kotlin-for-forge" }
+cobblemon-common = { group = "com.cobblemon", name = "mod", version.ref = "cobblemon" }
+cobblemon-neoforge = { group = "com.cobblemon", name = "neoforge", version.ref = "cobblemon" }
+junit-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
+junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit" }
+matthiesen-lib-neoforge = { group = "dev.matthiesen", name = "matthiesen-lib-neoforge", version.ref = "matthiesen_lib" }
+matthiesen-lib-api-neoforge = { group = "dev.matthiesen", name = "matthiesen-lib-api-neoforge", version.ref = "matthiesen_lib" }
+crafting-on-a-stick = { group = "maven.modrinth", name = "crafting-on-a-stick", version.ref = "crafting-on-a-stick" }
+curios-neoforge = { group = "top.theillusivec4.curios", name = "curios-neoforge", version.ref = "curios" }
+
+[bundles]
+modCompileOnly = ["cobblemon-common"]
+modImplementationNoTransitive = ["cobblemon-neoforge", "matthiesen-lib-neoforge", "matthiesen-lib-api-neoforge"]
+modImplementation = ["crafting-on-a-stick"]
+compileOnly = []
+runtimeOnly = ["curios-neoforge"]

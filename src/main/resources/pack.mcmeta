@@ -1,6 +1,6 @@
 {
   "pack": {
-    "description": "PC on a Stick",
+    "description": "${mod_name} resources",
     "pack_format": 7
   }
 }
