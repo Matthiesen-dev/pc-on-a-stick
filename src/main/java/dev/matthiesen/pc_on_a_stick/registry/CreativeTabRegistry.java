@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Supplier;
 
-public class CreativeTabRegistry extends AbstractCreativeModeTabRegistry {
+public final class CreativeTabRegistry extends AbstractCreativeModeTabRegistry {
     private static final CreativeTabRegistry INSTANCE = new CreativeTabRegistry();
 
     private CreativeTabRegistry() {

@@ -25,7 +25,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class PcOnAStickItem extends Item implements IWheelItem {
+public final class PcOnAStickItem extends Item implements IWheelItem {
     public PcOnAStickItem() {
         super(new Item.Properties());
     }

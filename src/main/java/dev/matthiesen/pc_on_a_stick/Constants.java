@@ -8,7 +8,7 @@ import dev.matthiesen.libs.faststats.Token;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Constants {
+public final class Constants {
     public static final String MOD_ID = "pc_on_a_stick";
     public static final String MOD_NAME = "Cobblemon PC on a Stick";
     public static @Token final String METRIC_TOKEN = "4cca9fca1856eb97b6c0ae6e0be9536e";
