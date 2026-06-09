@@ -1,3 +1,4 @@
+import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.kotlin.dsl.named
 import org.gradle.language.jvm.tasks.ProcessResources
 
@@ -16,3 +17,12 @@ tasks.named<ProcessResources>("processResources") {
     inputs.property("modrinth_url", project.property("modrinth_url").toString())
 }
 
+tasks.named<org.gradle.jvm.tasks.Jar>("jar") {
+    archiveBaseName.set("${rootProject.property("archives_base_name")}")
+    archiveClassifier.set("dev-slim")
+}
+
+tasks.named<RemapJarTask>("remapJar") {
+    archiveBaseName.set("${rootProject.property("archives_base_name")}")
+    archiveVersion.set(project.version.toString())
+}

@@ -5,6 +5,7 @@ bin
 .metadata
 .classpath
 .project
+.kotlin
 /.architectury-transformer/
 # idea
 out
@@ -12,6 +13,7 @@ out
 *.iws
 *.iml
 .idea
+output
 
 # gradle
 build

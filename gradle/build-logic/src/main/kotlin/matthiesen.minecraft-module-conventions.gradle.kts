@@ -14,7 +14,7 @@ pluginManager.withPlugin("dev.architectury.loom") {
     }
 
     tasks.named<RemapSourcesJarTask>("remapSourcesJar") {
-        archiveBaseName.set("${rootProject.property("archives_base_name")}-${project.name}")
+        archiveBaseName.set("${rootProject.property("archives_base_name")}")
         archiveVersion.set(project.version.toString())
         archiveClassifier.set("sources")
     }

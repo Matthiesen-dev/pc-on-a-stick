@@ -46,3 +46,22 @@ tasks {
         }
     }
 }
+
+tasks.register<Copy>("copyJars") {
+    group = "build"
+    description = "Copies JAR files from build to output directory"
+
+    from("./build/libs/") {
+        include("*.jar")
+        exclude("*-dev-shadow.jar")
+    }
+    into("./output/")
+
+    doFirst {
+        delete(fileTree("./output/") {
+            include("**/*")
+        })
+        file("./output/").mkdirs()
+    }
+}
+

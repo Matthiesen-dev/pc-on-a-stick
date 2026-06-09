@@ -1,0 +1,196 @@
+name: Publish Release to Modrinth
+
+# Minimum Required Secrets:
+# - MODRINTH_TOKEN (Modrinth API token with permissions to create versions)
+# - MODRINTH_ID (The ID of the Modrinth project to publish to)
+# - DISCORD_WEBHOOK_URL (The URL of the Discord webhook to send notifications to)
+
+on:
+  release:
+    types: [ published ]
+
+env:
+  MOD_NAME: Cobblemon PC on a Stick
+  ARTIFACT_BASENAME: cobblemon-pc-on-a-stick
+  RELEASE_JARS_ARTIFACT_PREFIX: release-jars
+  NEOFORGE_LOADER_VERSION: '21.1.182+'
+  MODRINTH_GAME_VERSION: 1.21.1
+  MODRINTH_DEPENDENCIES: |-
+    [
+      {"project_id":"MdwFAVRL","dependency_type":"required"},
+      {"project_id":"j2JrSWnx","dependency_type":"required"},
+      {"project_id":"cPmFkPpB","dependency_type":"required"},
+      {"project_id":"1MPqh4Vt","dependency_type":"required"},
+      {"project_id":"vvuO3ImH","dependency_type":"optional"}
+    ]
+  DISCORD_ICON_URL: "https://raw.githubusercontent.com/Matthiesen-dev/.github/refs/heads/main/mod-logos/cobblemon-pc-on-a-stick.png"
+
+# The dependencies above correspond to:
+# - Cobblemon (MdwFAVRL)
+# - Matthiesen Lib API (j2JrSWnx)
+# - Matthiesen Lib (cPmFkPpB)
+# - Crafting on a Stick (1MPqh4Vt)
+# - Curios API (vvuO3ImH)
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.parsed_version.outputs.version }}
+      is_snapshot: ${{ steps.parsed_version.outputs.is_snapshot }}
+    steps:
+      - name: Parse the version number from the event tag
+        id: parsed_version
+        run: |
+          version="${{ github.event.release.tag_name }}"
+          version="${version#v}"
+          is_snapshot=false
+          if [[ "$version" == *"-SNAPSHOT" ]]; then
+            is_snapshot=true
+          fi
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "is_snapshot=$is_snapshot" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Setup JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build with Gradle
+        run: ./gradlew build
+        env:
+          RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+
+      - name: Copy jars for publishing
+        if: ${{ needs.prepare.outputs.is_snapshot == 'false' }}
+        run: ./gradlew copyJars
+
+      - name: Upload jars artifact for downstream release jobs
+        if: ${{ needs.prepare.outputs.is_snapshot == 'false' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.RELEASE_JARS_ARTIFACT_PREFIX }}-${{ needs.prepare.outputs.version }}
+          path: output/*.jar
+
+      - name: Upload Jars to GitHub Release
+        if: ${{ needs.prepare.outputs.is_snapshot == 'false' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          files: output/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish_modrinth:
+    needs: [prepare, build]
+    if: ${{ needs.prepare.outputs.is_snapshot == 'false' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download release jars artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.RELEASE_JARS_ARTIFACT_PREFIX }}-${{ needs.prepare.outputs.version }}
+          path: output
+
+      - name: Publish to Modrinth
+        uses: cloudnode-pro/modrinth-publish@v2
+        with:
+          token: ${{ secrets.MODRINTH_TOKEN }}
+          project: ${{ secrets.MODRINTH_ID }}
+          name: ${{ format('{0} {1}', env.MOD_NAME, needs.prepare.outputs.version) }}
+          version: ${{ needs.prepare.outputs.version }}
+          changelog: ${{ github.event.release.body }}
+          loaders: "neoforge"
+          game-versions: ${{ env.MODRINTH_GAME_VERSION }}
+          files: output/${{ env.ARTIFACT_BASENAME }}-${{ needs.prepare.outputs.version }}.jar
+          dependencies: ${{ env.MODRINTH_DEPENDENCIES }}
+
+  sync_modrinth_description:
+    needs: [prepare, publish_modrinth]
+    if: ${{ needs.prepare.outputs.is_snapshot == 'false' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - name: Sync Project Description on Modrinth
+        uses: funnyboy-roks/modrinth-auto-desc@v1.7
+        with:
+          auth-token: ${{ secrets.MODRINTH_TOKEN }}
+          slug: ${{ secrets.MODRINTH_ID }}
+
+  send_discord_notification:
+    needs: [prepare, publish_modrinth]
+    if: ${{ needs.prepare.outputs.is_snapshot == 'false' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Discord Embed Payload
+        id: build_payload
+        env:
+          RELEASE_BODY: ${{ github.event.release.body }}
+        run: |
+          payload=$(jq -cn \
+            --arg title "New Release: ${{ env.MOD_NAME }} ${{ needs.prepare.outputs.version }}" \
+            --arg description "${{ github.event.release.body }}" \
+            '{
+              "username": "Matthiesen Release Bot",
+              "avatar_url": "https://raw.githubusercontent.com/Matthiesen-dev/.github/refs/heads/main/logo-transparent.png",
+              "embeds": [
+                {
+                  "title": $title,
+                  "description": $ENV.RELEASE_BODY,
+                  "color": 5763719,
+                  "thumbnail": {
+                    "url": "${{ env.DISCORD_ICON_URL }}"
+                  },
+                  "fields": [
+                    {
+                        "name": "Available Platforms",
+                        "value": "- NeoForge `${{ env.NEOFORGE_LOADER_VERSION }}`",
+                        "inline": true
+                    },
+                    {
+                        "name": "MC Version",
+                        "value": "`${{ env.MODRINTH_GAME_VERSION }}`",
+                        "inline": true
+                    },
+                    {
+                        "name":  "Download on Modrinth",
+                        "value": "[Modrinth](https://modrinth.com/mod/${{ secrets.MODRINTH_ID }}/)",
+                        "inline": false
+                    },
+                    {
+                        "name":  "Download on GitHub",
+                        "value": "[GitHub Release](${{ github.event.release.html_url }})",
+                        "inline": true
+                    }
+                  ]
+                }
+              ]
+            }'
+          )
+          echo "payload=$payload" >> "$GITHUB_OUTPUT"
+
+      - name: Send Discord Notification
+        env:
+          PAYLOAD: ${{ steps.build_payload.outputs.payload }}
+        run: |
+          curl -X POST -H "Content-Type: application/json" --data-raw "$PAYLOAD" ${{ secrets.DISCORD_WEBHOOK_URL }}
