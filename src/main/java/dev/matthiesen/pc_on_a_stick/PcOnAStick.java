@@ -10,6 +10,7 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 @Mod(Constants.MOD_ID)
 public final class PcOnAStick {
     public PcOnAStick(IEventBus modBus) {
+        Constants.readyMetric();
         ItemRegistry.init();
         CreativeTabRegistry.init();
         modBus.addListener(this::addCreative);
