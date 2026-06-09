@@ -30,16 +30,18 @@ public final class PcOnAStickItem extends Item implements IWheelItem {
         super(new Item.Properties());
     }
 
+    @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         openPCStorage(player);
         return InteractionResultHolder.sidedSuccess(player.getItemInHand(usedHand), level.isClientSide);
     }
 
+    @Override
     public void onWheelAction(Player player, Ref<ItemStack> ref) {
         openPCStorage(player);
     }
 
-    public static void openPCStorage(Player player) {
+    private static void openPCStorage(Player player) {
         if (!(player instanceof ServerPlayer serverPlayer)) return;
         // Check if player is in Battle
         if(PlayerExtensionsKt.isInBattle(serverPlayer)) {

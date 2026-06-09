@@ -22,7 +22,12 @@ public final class CreativeTabRegistry extends AbstractCreativeModeTabRegistry {
                 .newCreativeTabBuilder()
                 .title(Component.translatable("creativetab.pc_on_a_stick.items"))
                 .icon(() -> new ItemStack(ItemRegistry.PC_ON_A_STICK.get()))
-                .displayItems((itemDisplayParameters, output) -> output.accept(ItemRegistry.PC_ON_A_STICK.get()))
+                .displayItems((itemDisplayParameters, output) -> {
+                    var items = ItemRegistry.CREATIVE_ITEMS;
+                    for (var item : items) {
+                        output.accept(item.get());
+                    }
+                })
                 .build());
     }
 
