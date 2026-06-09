@@ -17,19 +17,19 @@ env:
   MODRINTH_GAME_VERSION: 1.21.1
   MODRINTH_DEPENDENCIES: |-
     [
-      {"project_id":"S1TrAn8c","dependency_type":"required"},
+      {"project_id":"MdwFAVRL","dependency_type":"required","version_id":"S1TrAn8c"},
       {"project_id":"j2JrSWnx","dependency_type":"required"},
       {"project_id":"cPmFkPpB","dependency_type":"required"},
-      {"project_id":"1MPqh4Vt","dependency_type":"required"},
+      {"project_id":"Tg5fXO1x","dependency_type":"required","version_id":"1MPqh4Vt"},
       {"project_id":"vvuO3ImH","dependency_type":"optional"}
     ]
   DISCORD_ICON_URL: "https://raw.githubusercontent.com/Matthiesen-dev/.github/refs/heads/main/mod-logos/cobblemon-pc-on-a-stick.png"
 
 # The dependencies above correspond to:
-# - Cobblemon-neoforge-1.7.3 (S1TrAn8c)
+# - Cobblemon-neoforge-1.7.3 (MdwFAVRL:S1TrAn8c)
 # - Matthiesen Lib API (j2JrSWnx)
 # - Matthiesen Lib (cPmFkPpB)
-# - Crafting on a Stick (1MPqh4Vt)
+# - Crafting on a Stick (Tg5fXO1x:1MPqh4Vt)
 # - Curios API (vvuO3ImH)
 
 jobs:
