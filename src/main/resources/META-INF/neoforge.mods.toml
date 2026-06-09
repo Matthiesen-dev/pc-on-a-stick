@@ -40,3 +40,17 @@ mandatory = true
 versionRange = "[1.21.0.4,)"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = 'matthiesen_lib'
+mandatory = true
+versionRange = "[1.5.7,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = 'matthiesen_lib_api'
+mandatory = true
+versionRange = "[1.5.7,)"
+ordering = "AFTER"
+side = "BOTH"
