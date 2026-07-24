@@ -6,7 +6,7 @@
   <img src="https://mods.matthiesen.dev/badges/cobblemon.svg" alt="Cobblemon">
 </div>
 
-> This mod has been deprecated and is no longer going to receive major updates. It will still receive bug fixes for anything broken with current versions listed below. 
+> ⚠️ This mod has been deprecated and is no longer going to receive major updates. It will still receive bug fixes for anything broken with current versions listed below. 
 > If you are looking for a more feature rich version of this mod, check out [Cobblemon Tablet](https://modrinth.com/mod/cobblemon-tablet) which is a full multi-loader rewrite of this mod.
 
 Built using the [Crafting on a Stick](https://modrinth.com/mod/crafting-on-a-stick) API, this mod is a super simple addon mod for Crafting on a Stick and Cobblemon to bring your PC with you on a Stick!
